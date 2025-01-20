@@ -1,0 +1,221 @@
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Creative Drum Kit</title>
+        <style>
+            /* Resetting default margin and padding for all elements */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+
+            /* Styling for the body */
+            body {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: linear-gradient(45deg, #ffeb3b, #ff5722);
+            }
+
+            /* Container for the drum kit */
+            .container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            /* Title Styling */
+            .title {
+                font-size: 3rem;
+                font-weight: bold;
+                color: white;
+                margin-bottom: 30px;
+                text-align: center;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            }
+
+            /* Grid layout for the drum buttons */
+            .drum-kit {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+
+            /* Styling for individual drum buttons */
+            .drum-button {
+                background-color: #fff;
+                color: #000;
+                border: none;
+                padding: 25px 50px;
+                font-size: 25px;
+                cursor: pointer;
+                border-radius: 12px;
+                transition: all 0.3s ease;
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.429);
+            }
+
+            /* Hover effect for drum buttons */
+            .drum-button:hover {
+                background-color: #4caf50;
+                color: #fff;
+                transform: translateY(-5px);
+                box-shadow: 0 25px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Focus effect for drum buttons */
+            .drum-button:focus {
+                outline: none;
+            }
+
+            /* Styling for the stop button */
+            .stop-button {
+                background-color: #f44336;
+                color: #fff;
+                border: none;
+                padding: 15px 30px;
+                font-size: 18px;
+                cursor: pointer;
+                border-radius: 10px;
+                transition: all 0.3s ease;
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Hover effect for stop button */
+            .stop-button:hover {
+                background-color: #e57373;
+                transform: translateY(-5px);
+                box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            /* Focus effect for stop button */
+            .stop-button:focus {
+                outline: #4caf50;
+            }
+
+            /* Animation for the playing state */
+            .playing {
+                animation: vibrate 0.3s infinite;
+            }
+
+            /* Keyframes for the vibrate animation */
+            @keyframes vibrate {
+                0% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(1.1);
+                }
+
+                100% {
+                    transform: scale(1);
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <!-- Title above the drum kit -->
+            <div class="title"> Drum Kit</div>
+
+            <div class="drum-kit">
+                <!-- Drum buttons with corresponding sound IDs -->
+                <button class="drum-button" id="clap-btn" onclick="playSound('clap')">&#x1F44F;</button>
+                <button class="drum-button" id="hihat-btn" onclick="playSound('hihat')">&#x1F3B6;</button>
+                <button class="drum-button" id="kick-btn" onclick="playSound('kick')">&#x1F91D;</button>
+                <button class="drum-button" id="openhat-btn" onclick="playSound('openhat')">&#x1F3A4;</button>
+                <button class="drum-button" id="boom-btn" onclick="playSound('boom')">&#x1F4A5;</button>
+                <button class="drum-button" id="ride-btn" onclick="playSound('ride')">&#x1F9F7;</button>
+                <button class="drum-button" id="snare-btn" onclick="playSound('snare')">&#x1F4A8;</button>
+                <button class="drum-button" id="hiphop-btn" onclick="playSound('hiphop')">&#x1F525;</button>
+                <button class="drum-button" id="piano-btn" onclick="playSound('piano')">&#x1f3b9;</button>
+            </div>
+
+            <!-- Button to stop all sounds -->
+            <button class="stop-button" onclick="stopAllSounds()">Stop All</button>
+        </div>
+
+        <!-- Audio elements for each sound -->
+        <audio id="clap-sound" src="cs-kick-04-d-128bpm-258878.mp3"></audio>
+        <audio id="hihat-sound" src="hi-hat.mp3"></audio>
+        <audio id="kick-sound" src="kick-ohh-clap-lp-130-bpm-103023.mp3"></audio>
+        <audio id="openhat-sound" src="open-hut.mp3"></audio>
+        <audio id="boom-sound" src="boom.mp3"></audio>
+        <audio id="ride-sound" src="ride-bell-sound-37732.mp3"></audio>
+        <audio id="snare-sound" src="snare-hit-smash-sound-effect-240897.mp3"></audio>
+        <audio id="hiphop-sound" src="hip-hop-drums-loop-bpm-140-5-179398.mp3"></audio>
+        <audio id="piano-sound" src="piano-chords-239967.mp3"></audio>
+
+        <script>
+            // Function to play the sound associated with the button clicked
+            function playSound(soundId) {
+                const sound = document.getElementById(soundId + "-sound");
+                const button = document.getElementById(soundId + "-btn");
+                sound.play(); // Play the sound
+                button.classList.add('playing'); // Add 'playing' class to the button
+                sound.onended = () => {
+                    button.classList.remove('playing'); // Remove 'playing' class when sound ends
+                };
+            }
+
+            // Function to stop all sounds and reset their state
+            function stopAllSounds() {
+                let sounds = document.querySelectorAll('audio'); // Select all audio elements
+                for (let i = 0; i < sounds.length; i++) {
+                    sounds[i].pause(); // Pause the sound
+                    sounds[i].currentTime = 0; // Reset the sound to the beginning
+                    document.getElementById(sounds[i].id.replace('-sound', '') + "-btn").classList.remove('playing'); // Remove 'playing' class from the button
+                }
+            }
+
+            // Keyboard event listener to play sounds with specific keys
+            document.onkeydown = function (e) {
+                switch (e.key) {
+                    case 'a':
+                        playSound('clap'); // Play clap sound
+                        break;
+                    case 's':
+                        playSound('hihat'); // Play hi-hat sound
+                        break;
+                    case 'd':
+                        playSound('kick'); // Play kick sound
+                        break;
+                    case 'f':
+                        playSound('openhat'); // Play open hat sound
+                        break;
+                    case 'g':
+                        playSound('boom'); // Play boom sound
+                        break;
+                    case 'h':
+                        playSound('ride'); // Play ride sound
+                        break;
+                    case 'j':
+                        playSound('snare'); // Play snare sound
+                        break;
+                    case 'k':
+                        playSound('hiphop'); // Play hip-hop sound
+                        break;
+                    case 'l':
+                        playSound('piano'); // Play piano sound
+                        break;
+                    case ' ':
+                        stopAllSounds(); // Stop all sounds when spacebar is pressed
+                        break;
+                }
+            }
+        </script>
+
+    </body>
+
+    </html>
