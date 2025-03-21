@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,163 +8,823 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Montserrat:wght@400;700&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center;
-            font-family: 'Montserrat', sans-serif; overflow-x: hidden; position: relative; transition: background 0.5s;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.5s;
         }
-        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
         .star {
-            position: absolute; background: #fff; border-radius: 50%;
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
             animation: twinkle var(--duration) infinite ease-in-out, float var(--float) infinite;
-            opacity: 0; box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            opacity: 0;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
         }
-        @keyframes twinkle { 0%, 100% { opacity: 0; } 50% { opacity: var(--opacity); } }
-        @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0); } }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: var(--opacity);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
         .glow {
-            position: fixed; width: 70vw; height: 70vw; border-radius: 50%; filter: blur(50px);
-            animation: glowSpin 15s infinite linear; z-index: -1; transition: background 0.5s;
+            position: fixed;
+            width: 70vw;
+            height: 70vw;
+            border-radius: 50%;
+            filter: blur(50px);
+            animation: glowSpin 15s infinite linear;
+            z-index: -1;
+            transition: background 0.5s;
         }
-        @keyframes glowSpin { 0% { transform: rotate(0deg) scale(1); } 100% { transform: rotate(360deg) scale(1.2); } }
+
+        @keyframes glowSpin {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1.2);
+            }
+        }
+
         .container {
-            display: flex; flex-direction: column; justify-content: center; align-items: center; width: 90%; max-width: 900px;
-            padding: 40px 30px; background: rgba(10, 10, 30, 0.85); backdrop-filter: blur(15px); border-radius: 25px;
-            position: relative; overflow: hidden; z-index: 1; transition: border 0.5s, box-shadow 0.5s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            max-width: 900px;
+            padding: 40px 30px;
+            background: rgba(10, 10, 30, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: border 0.5s, box-shadow 0.5s;
         }
+
         .title {
-            font-family: 'Audiowide', cursive; font-size: 4rem; color: #fff; margin-bottom: 40px; text-align: center;
-            animation: titlePulse 2s infinite; transition: text-shadow 0.5s;
+            font-family: 'Audiowide', cursive;
+            font-size: 4rem;
+            color: #fff;
+            margin-bottom: 40px;
+            text-align: center;
+            animation: titlePulse 2s infinite;
+            transition: text-shadow 0.5s;
         }
-        @keyframes titlePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05) rotate(2deg); } }
-        .subtitle { font-size: 1.3rem; margin-top: -25px; margin-bottom: 35px; text-align: center; letter-spacing: 6px; text-transform: uppercase; transition: color 0.5s; }
-        .drum-kit { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; width: 100%; }
+
+        @keyframes titlePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05) rotate(2deg);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            margin-top: -25px;
+            margin-bottom: 35px;
+            text-align: center;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            transition: color 0.5s;
+        }
+
+        .drum-kit {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
         .drum-button {
-            height: 120px; background: rgba(20, 20, 50, 0.9); border: none; border-radius: 20px; cursor: pointer;
-            transition: all 0.3s ease; position: relative; overflow: hidden;
+            height: 120px;
+            background: rgba(20, 20, 50, 0.9);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
+
         .drum-button::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%); opacity: 0;
-            transition: opacity 0.3s; animation: ripple 4s infinite;
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            animation: ripple 4s infinite;
         }
-        @keyframes ripple { 0% { transform: scale(0); opacity: 0.5; } 100% { transform: scale(2); opacity: 0; } }
-        .drum-button:hover::after { opacity: 0.2; }
-        .icon-container { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: inherit; z-index: 1; }
-        .icon { font-size: 40px; margin-bottom: 10px; text-shadow: 0 0 10px currentColor; }
-        .label { font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .drum-button:hover { transform: scale(1.1) rotate(5deg); }
-        .controls { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 30px; }
-        .visualizer { width: 100%; height: 70px; background: rgba(20, 20, 50, 0.7); border-radius: 15px; position: relative; overflow: hidden; transition: border 0.5s; }
-        .wave { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: space-around; padding: 0 10px; }
-        .wave-bar { flex: 1; margin: 0 2px; border-radius: 5px 5px 0 0; transition: height 0.2s ease, background 0.5s; }
-        .control-buttons { display: flex; gap: 25px; justify-content: center; width: 100%; flex-wrap: wrap; }
-        .stop-button, .mode-button, .theme-button {
-            padding: 15px 35px; font-size: 18px; font-weight: bold; color: #fff; border-radius: 50px;
-            cursor: pointer; transition: all 0.3s ease; width: 200px; text-transform: uppercase;
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
         }
-        .stop-button:hover, .mode-button:hover, .theme-button:hover { transform: scale(1.1); }
-        .key-hints { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-top: 30px; width: 100%; }
-        .key-hint { background: rgba(30, 30, 70, 0.7); padding: 12px; border-radius: 10px; font-size: 14px; text-align: center; transition: color 0.5s, box-shadow 0.5s; }
-        .key { background: rgba(50, 50, 100, 0.9); padding: 8px; width: 35px; height: 35px; border-radius: 8px; margin: 0 auto 5px; font-weight: bold; transition: color 0.5s; }
-        .playing { transform: scale(0.9); transition: all 0.2s; }
-        .sparkle { position: absolute; width: 10px; height: 10px; background: #fff; border-radius: 50%; animation: sparkleFade 1s ease-out forwards; z-index: 10; }
-        @keyframes sparkleFade { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0) translate(var(--x), var(--y)); } }
-        .status-bar { display: flex; justify-content: space-between; width: 100%; margin-bottom: 30px; font-size: 16px; transition: color 0.5s; }
-        .beat-counter { display: flex; gap: 8px; }
-        .beat-dot { width: 15px; height: 15px; border-radius: 50%; transition: all 0.3s; }
-        .beat-dot.active { transform: scale(1.2); }
-        .mode-indicator { text-transform: uppercase; padding: 5px 20px; background: rgba(30, 30, 70, 0.7); border-radius: 25px; transition: box-shadow 0.5s; }
+
+        .drum-button:hover::after {
+            opacity: 0.2;
+        }
+
+        .icon-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: inherit;
+            z-index: 1;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .label {
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .drum-button:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 30px;
+        }
+
+        .visualizer {
+            width: 100%;
+            height: 70px;
+            background: rgba(20, 20, 50, 0.7);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            transition: border 0.5s;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 0 10px;
+        }
+
+        .wave-bar {
+            flex: 1;
+            margin: 0 2px;
+            border-radius: 5px 5px 0 0;
+            transition: height 0.2s ease, background 0.5s;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .stop-button,
+        .mode-button,
+        .theme-button {
+            padding: 15px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 200px;
+            text-transform: uppercase;
+        }
+
+        .stop-button:hover,
+        .mode-button:hover,
+        .theme-button:hover {
+            transform: scale(1.1);
+        }
+
+        .key-hints {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .key-hint {
+            background: rgba(30, 30, 70, 0.7);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            transition: color 0.5s, box-shadow 0.5s;
+        }
+
+        .key {
+            background: rgba(50, 50, 100, 0.9);
+            padding: 8px;
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            margin: 0 auto 5px;
+            font-weight: bold;
+            transition: color 0.5s;
+        }
+
+        .playing {
+            transform: scale(0.9);
+            transition: all 0.2s;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            animation: sparkleFade 1s ease-out forwards;
+            z-index: 10;
+        }
+
+        @keyframes sparkleFade {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0) translate(var(--x), var(--y));
+            }
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 30px;
+            font-size: 16px;
+            transition: color 0.5s;
+        }
+
+        .beat-counter {
+            display: flex;
+            gap: 8px;
+        }
+
+        .beat-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .beat-dot.active {
+            transform: scale(1.2);
+        }
+
+        .mode-indicator {
+            text-transform: uppercase;
+            padding: 5px 20px;
+            background: rgba(30, 30, 70, 0.7);
+            border-radius: 25px;
+            transition: box-shadow 0.5s;
+        }
 
         /* Neon Galaxy Theme (Default) */
-        body.neon-galaxy { background: linear-gradient(45deg, #1a0b3d, #0d1b2a); animation: bgPulse 10s infinite alternate; }
-        @keyframes bgPulse { 0% { background: linear-gradient(45deg, #1a0b3d, #0d1b2a); } 50% { background: linear-gradient(45deg, #2a1b5d, #1b2a3d); } 100% { background: linear-gradient(45deg, #3a2b7d, #2b3a5d); } }
-        .neon-galaxy .glow { background: radial-gradient(circle, rgba(255, 20, 147, 0.5) 0%, rgba(0, 191, 255, 0.3) 50%, rgba(0, 0, 0, 0) 80%); }
-        .neon-galaxy .container { border: 2px solid rgba(255, 20, 147, 0.5); box-shadow: 0 0 40px rgba(255, 20, 147, 0.7), inset 0 0 20px rgba(0, 191, 255, 0.3); }
-        .neon-galaxy .title { text-shadow: 0 0 15px #ff1493, 0 0 25px #00b7eb; }
-        .neon-galaxy .subtitle, .neon-galaxy .status-bar { color: #ff69b4; }
-        .neon-galaxy .drum-button { box-shadow: 0 0 15px currentColor; }
-        .neon-galaxy .drum-button:hover { box-shadow: 0 0 25px currentColor; }
-        .neon-galaxy .visualizer { border: 2px solid #00b7eb; }
-        .neon-galaxy .wave-bar { background: linear-gradient(to top, #ff1493, #00b7eb); }
-        .neon-galaxy .stop-button { background: linear-gradient(135deg, #ff5e5e, #8b0000); border: 2px solid #ff5e5e; box-shadow: 0 0 15px #ff5e5e; }
-        .neon-galaxy .stop-button:hover { box-shadow: 0 0 25px #ff5e5e; }
-        .neon-galaxy .mode-button { background: linear-gradient(135deg, #00b7eb, #1e90ff); border: 2px solid #00b7eb; box-shadow: 0 0 15px #00b7eb; }
-        .neon-galaxy .mode-button:hover { box-shadow: 0 0 25px #00b7eb; }
-        .neon-galaxy .theme-button { background: linear-gradient(135deg, #ff1493, #9400d3); border: 2px solid #ff1493; box-shadow: 0 0 15px #ff1493; }
-        .neon-galaxy .theme-button:hover { box-shadow: 0 0 25px #ff1493; }
-        .neon-galaxy .key-hint { color: #00b7eb; box-shadow: 0 0 10px rgba(0, 191, 255, 0.5); }
-        .neon-galaxy .key { color: #ff1493; }
-        .neon-galaxy .playing { box-shadow: 0 0 30px currentColor; }
-        .neon-galaxy .beat-dot { background: rgba(255, 20, 147, 0.4); }
-        .neon-galaxy .beat-dot.active { background: #ff1493; box-shadow: 0 0 15px #ff1493; }
-        .neon-galaxy .mode-indicator { box-shadow: 0 0 10px #00b7eb; }
+        body.neon-galaxy {
+            background: linear-gradient(45deg, #1a0b3d, #0d1b2a);
+            animation: bgPulse 10s infinite alternate;
+        }
+
+        @keyframes bgPulse {
+            0% {
+                background: linear-gradient(45deg, #1a0b3d, #0d1b2a);
+            }
+
+            50% {
+                background: linear-gradient(45deg, #2a1b5d, #1b2a3d);
+            }
+
+            100% {
+                background: linear-gradient(45deg, #3a2b7d, #2b3a5d);
+            }
+        }
+
+        .neon-galaxy .glow {
+            background: radial-gradient(circle, rgba(255, 20, 147, 0.5) 0%, rgba(0, 191, 255, 0.3) 50%, rgba(0, 0, 0, 0) 80%);
+        }
+
+        .neon-galaxy .container {
+            border: 2px solid rgba(255, 20, 147, 0.5);
+            box-shadow: 0 0 40px rgba(255, 20, 147, 0.7), inset 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+
+        .neon-galaxy .title {
+            text-shadow: 0 0 15px #ff1493, 0 0 25px #00b7eb;
+        }
+
+        .neon-galaxy .subtitle,
+        .neon-galaxy .status-bar {
+            color: #ff69b4;
+        }
+
+        .neon-galaxy .drum-button {
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .neon-galaxy .drum-button:hover {
+            box-shadow: 0 0 25px currentColor;
+        }
+
+        .neon-galaxy .visualizer {
+            border: 2px solid #00b7eb;
+        }
+
+        .neon-galaxy .wave-bar {
+            background: linear-gradient(to top, #ff1493, #00b7eb);
+        }
+
+        .neon-galaxy .stop-button {
+            background: linear-gradient(135deg, #ff5e5e, #8b0000);
+            border: 2px solid #ff5e5e;
+            box-shadow: 0 0 15px #ff5e5e;
+        }
+
+        .neon-galaxy .stop-button:hover {
+            box-shadow: 0 0 25px #ff5e5e;
+        }
+
+        .neon-galaxy .mode-button {
+            background: linear-gradient(135deg, #00b7eb, #1e90ff);
+            border: 2px solid #00b7eb;
+            box-shadow: 0 0 15px #00b7eb;
+        }
+
+        .neon-galaxy .mode-button:hover {
+            box-shadow: 0 0 25px #00b7eb;
+        }
+
+        .neon-galaxy .theme-button {
+            background: linear-gradient(135deg, #ff1493, #9400d3);
+            border: 2px solid #ff1493;
+            box-shadow: 0 0 15px #ff1493;
+        }
+
+        .neon-galaxy .theme-button:hover {
+            box-shadow: 0 0 25px #ff1493;
+        }
+
+        .neon-galaxy .key-hint {
+            color: #00b7eb;
+            box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+        }
+
+        .neon-galaxy .key {
+            color: #ff1493;
+        }
+
+        .neon-galaxy .playing {
+            box-shadow: 0 0 30px currentColor;
+        }
+
+        .neon-galaxy .beat-dot {
+            background: rgba(255, 20, 147, 0.4);
+        }
+
+        .neon-galaxy .beat-dot.active {
+            background: #ff1493;
+            box-shadow: 0 0 15px #ff1493;
+        }
+
+        .neon-galaxy .mode-indicator {
+            box-shadow: 0 0 10px #00b7eb;
+        }
 
         /* Cyber Punk Theme */
-        body.cyber-punk { background: linear-gradient(45deg, #0f0f0f, #1a1a1a); animation: cyberPulse 8s infinite alternate; }
-        @keyframes cyberPulse { 0% { background: linear-gradient(45deg, #0f0f0f, #1a1a1a); } 50% { background: linear-gradient(45deg, #1f1f1f, #2a2a2a); } 100% { background: linear-gradient(45deg, #2f2f2f, #3a3a3a); } }
-        .cyber-punk .glow { background: radial-gradient(circle, rgba(255, 0, 255, 0.5) 0%, rgba(0, 255, 0, 0.3) 50%, rgba(0, 0, 0, 0) 80%); }
-        .cyber-punk .container { border: 2px solid rgba(255, 0, 255, 0.5); box-shadow: 0 0 40px rgba(255, 0, 255, 0.7), inset 0 0 20px rgba(0, 255, 0, 0.3); }
-        .cyber-punk .title { text-shadow: 0 0 15px #ff00ff, 0 0 25px #00ff00; }
-        .cyber-punk .subtitle, .cyber-punk .status-bar { color: #ff00ff; }
-        .cyber-punk .drum-button { box-shadow: 0 0 15px currentColor; }
-        .cyber-punk .drum-button:hover { box-shadow: 0 0 25px currentColor; }
-        .cyber-punk .visualizer { border: 2px solid #00ff00; }
-        .cyber-punk .wave-bar { background: linear-gradient(to top, #ff00ff, #00ff00); }
-        .cyber-punk .stop-button { background: linear-gradient(135deg, #ff4500, #8b2500); border: 2px solid #ff4500; box-shadow: 0 0 15px #ff4500; }
-        .cyber-punk .stop-button:hover { box-shadow: 0 0 25px #ff4500; }
-        .cyber-punk .mode-button { background: linear-gradient(135deg, #00ff00, #008000); border: 2px solid #00ff00; box-shadow: 0 0 15px #00ff00; }
-        .cyber-punk .mode-button:hover { box-shadow: 0 0 25px #00ff00; }
-        .cyber-punk .theme-button { background: linear-gradient(135deg, #ff00ff, #800080); border: 2px solid #ff00ff; box-shadow: 0 0 15px #ff00ff; }
-        .cyber-punk .theme-button:hover { box-shadow: 0 0 25px #ff00ff; }
-        .cyber-punk .key-hint { color: #00ff00; box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); }
-        .cyber-punk .key { color: #ff00ff; }
-        .cyber-punk .playing { box-shadow: 0 0 30px currentColor; }
-        .cyber-punk .beat-dot { background: rgba(255, 0, 255, 0.4); }
-        .cyber-punk .beat-dot.active { background: #ff00ff; box-shadow: 0 0 15px #ff00ff; }
-        .cyber-punk .mode-indicator { box-shadow: 0 0 10px #00ff00; }
+        body.cyber-punk {
+            background: linear-gradient(45deg, #0f0f0f, #1a1a1a);
+            animation: cyberPulse 8s infinite alternate;
+        }
+
+        @keyframes cyberPulse {
+            0% {
+                background: linear-gradient(45deg, #0f0f0f, #1a1a1a);
+            }
+
+            50% {
+                background: linear-gradient(45deg, #1f1f1f, #2a2a2a);
+            }
+
+            100% {
+                background: linear-gradient(45deg, #2f2f2f, #3a3a3a);
+            }
+        }
+
+        .cyber-punk .glow {
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.5) 0%, rgba(0, 255, 0, 0.3) 50%, rgba(0, 0, 0, 0) 80%);
+        }
+
+        .cyber-punk .container {
+            border: 2px solid rgba(255, 0, 255, 0.5);
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.7), inset 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .cyber-punk .title {
+            text-shadow: 0 0 15px #ff00ff, 0 0 25px #00ff00;
+        }
+
+        .cyber-punk .subtitle,
+        .cyber-punk .status-bar {
+            color: #ff00ff;
+        }
+
+        .cyber-punk .drum-button {
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .cyber-punk .drum-button:hover {
+            box-shadow: 0 0 25px currentColor;
+        }
+
+        .cyber-punk .visualizer {
+            border: 2px solid #00ff00;
+        }
+
+        .cyber-punk .wave-bar {
+            background: linear-gradient(to top, #ff00ff, #00ff00);
+        }
+
+        .cyber-punk .stop-button {
+            background: linear-gradient(135deg, #ff4500, #8b2500);
+            border: 2px solid #ff4500;
+            box-shadow: 0 0 15px #ff4500;
+        }
+
+        .cyber-punk .stop-button:hover {
+            box-shadow: 0 0 25px #ff4500;
+        }
+
+        .cyber-punk .mode-button {
+            background: linear-gradient(135deg, #00ff00, #008000);
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        .cyber-punk .mode-button:hover {
+            box-shadow: 0 0 25px #00ff00;
+        }
+
+        .cyber-punk .theme-button {
+            background: linear-gradient(135deg, #ff00ff, #800080);
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .cyber-punk .theme-button:hover {
+            box-shadow: 0 0 25px #ff00ff;
+        }
+
+        .cyber-punk .key-hint {
+            color: #00ff00;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        .cyber-punk .key {
+            color: #ff00ff;
+        }
+
+        .cyber-punk .playing {
+            box-shadow: 0 0 30px currentColor;
+        }
+
+        .cyber-punk .beat-dot {
+            background: rgba(255, 0, 255, 0.4);
+        }
+
+        .cyber-punk .beat-dot.active {
+            background: #ff00ff;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .cyber-punk .mode-indicator {
+            box-shadow: 0 0 10px #00ff00;
+        }
 
         /* Retro Wave Theme */
-        body.retro-wave { background: linear-gradient(45deg, #1b0036, #360036); animation: retroPulse 12s infinite alternate; }
-        @keyframes retroPulse { 0% { background: linear-gradient(45deg, #1b0036, #360036); } 50% { background: linear-gradient(45deg, #2b1056, #461056); } 100% { background: linear-gradient(45deg, #3b2076, #562076); } }
-        .retro-wave .glow { background: radial-gradient(circle, rgba(255, 105, 180, 0.5) 0%, rgba(64, 224, 208, 0.3) 50%, rgba(0, 0, 0, 0) 80%); }
-        .retro-wave .container { border: 2px solid rgba(255, 105, 180, 0.5); box-shadow: 0 0 40px rgba(255, 105, 180, 0.7), inset 0 0 20px rgba(64, 224, 208, 0.3); }
-        .retro-wave .title { text-shadow: 0 0 15px #ff69b4, 0 0 25px #40e0d0; }
-        .retro-wave .subtitle, .retro-wave .status-bar { color: #ff69b4; }
-        .retro-wave .drum-button { box-shadow: 0 0 15px currentColor; }
-        .retro-wave .drum-button:hover { box-shadow: 0 0 25px currentColor; }
-        .retro-wave .visualizer { border: 2px solid #40e0d0; }
-        .retro-wave .wave-bar { background: linear-gradient(to top, #ff69b4, #40e0d0); }
-        .retro-wave .stop-button { background: linear-gradient(135deg, #ff4500, #8b2500); border: 2px solid #ff4500; box-shadow: 0 0 15px #ff4500; }
-        .retro-wave .stop-button:hover { box-shadow: 0 0 25px #ff4500; }
-        .retro-wave .mode-button { background: linear-gradient(135deg, #40e0d0, #20b2aa); border: 2px solid #40e0d0; box-shadow: 0 0 15px #40e0d0; }
-        .retro-wave .mode-button:hover { box-shadow: 0 0 25px #40e0d0; }
-        .retro-wave .theme-button { background: linear-gradient(135deg, #ff69b4, #c71585); border: 2px solid #ff69b4; box-shadow: 0 0 15px #ff69b4; }
-        .retro-wave .theme-button:hover { box-shadow: 0 0 25px #ff69b4; }
-        .retro-wave .key-hint { color: #40e0d0; box-shadow: 0 0 10px rgba(64, 224, 208, 0.5); }
-        .retro-wave .key { color: #ff69b4; }
-        .retro-wave .playing { box-shadow: 0 0 30px currentColor; }
-        .retro-wave .beat-dot { background: rgba(255, 105, 180, 0.4); }
-        .retro-wave .beat-dot.active { background: #ff69b4; box-shadow: 0 0 15px #ff69b4; }
-        .retro-wave .mode-indicator { box-shadow: 0 0 10px #40e0d0; }
+        body.retro-wave {
+            background: linear-gradient(45deg, #1b0036, #360036);
+            animation: retroPulse 12s infinite alternate;
+        }
 
-        #clap-btn { color: #ff5e94; } #hihat-btn { color: #5edfff; } #kick-btn { color: #ffb55e; }
-        #openhat-btn { color: #5effb9; } #boom-btn { color: #ff5e5e; } #ride-btn { color: #ae5eff; }
-        #snare-btn { color: #5e8cff; } #hiphop-btn { color: #ffde5e; } #piano-btn { color: #ff5ee7; }
+        @keyframes retroPulse {
+            0% {
+                background: linear-gradient(45deg, #1b0036, #360036);
+            }
+
+            50% {
+                background: linear-gradient(45deg, #2b1056, #461056);
+            }
+
+            100% {
+                background: linear-gradient(45deg, #3b2076, #562076);
+            }
+        }
+
+        .retro-wave .glow {
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.5) 0%, rgba(64, 224, 208, 0.3) 50%, rgba(0, 0, 0, 0) 80%);
+        }
+
+        .retro-wave .container {
+            border: 2px solid rgba(255, 105, 180, 0.5);
+            box-shadow: 0 0 40px rgba(255, 105, 180, 0.7), inset 0 0 20px rgba(64, 224, 208, 0.3);
+        }
+
+        .retro-wave .title {
+            text-shadow: 0 0 15px #ff69b4, 0 0 25px #40e0d0;
+        }
+
+        .retro-wave .subtitle,
+        .retro-wave .status-bar {
+            color: #ff69b4;
+        }
+
+        .retro-wave .drum-button {
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .retro-wave .drum-button:hover {
+            box-shadow: 0 0 25px currentColor;
+        }
+
+        .retro-wave .visualizer {
+            border: 2px solid #40e0d0;
+        }
+
+        .retro-wave .wave-bar {
+            background: linear-gradient(to top, #ff69b4, #40e0d0);
+        }
+
+        .retro-wave .stop-button {
+            background: linear-gradient(135deg, #ff4500, #8b2500);
+            border: 2px solid #ff4500;
+            box-shadow: 0 0 15px #ff4500;
+        }
+
+        .retro-wave .stop-button:hover {
+            box-shadow: 0 0 25px #ff4500;
+        }
+
+        .retro-wave .mode-button {
+            background: linear-gradient(135deg, #40e0d0, #20b2aa);
+            border: 2px solid #40e0d0;
+            box-shadow: 0 0 15px #40e0d0;
+        }
+
+        .retro-wave .mode-button:hover {
+            box-shadow: 0 0 25px #40e0d0;
+        }
+
+        .retro-wave .theme-button {
+            background: linear-gradient(135deg, #ff69b4, #c71585);
+            border: 2px solid #ff69b4;
+            box-shadow: 0 0 15px #ff69b4;
+        }
+
+        .retro-wave .theme-button:hover {
+            box-shadow: 0 0 25px #ff69b4;
+        }
+
+        .retro-wave .key-hint {
+            color: #40e0d0;
+            box-shadow: 0 0 10px rgba(64, 224, 208, 0.5);
+        }
+
+        .retro-wave .key {
+            color: #ff69b4;
+        }
+
+        .retro-wave .playing {
+            box-shadow: 0 0 30px currentColor;
+        }
+
+        .retro-wave .beat-dot {
+            background: rgba(255, 105, 180, 0.4);
+        }
+
+        .retro-wave .beat-dot.active {
+            background: #ff69b4;
+            box-shadow: 0 0 15px #ff69b4;
+        }
+
+        .retro-wave .mode-indicator {
+            box-shadow: 0 0 10px #40e0d0;
+        }
+
+        #clap-btn {
+            color: #ff5e94;
+        }
+
+        #hihat-btn {
+            color: #5edfff;
+        }
+
+        #kick-btn {
+            color: #ffb55e;
+        }
+
+        #openhat-btn {
+            color: #5effb9;
+        }
+
+        #boom-btn {
+            color: #ff5e5e;
+        }
+
+        #ride-btn {
+            color: #ae5eff;
+        }
+
+        #snare-btn {
+            color: #5e8cff;
+        }
+
+        #hiphop-btn {
+            color: #ffde5e;
+        }
+
+        #piano-btn {
+            color: #ff5ee7;
+        }
 
         @media (max-width: 768px) {
-            .title { font-size: 3rem; } .subtitle { font-size: 1rem; margin-top: -15px; margin-bottom: 25px; }
-            .drum-kit { gap: 15px; } .drum-button { height: 100px; } .icon { font-size: 32px; }
-            .control-buttons { flex-direction: column; gap: 15px; } .stop-button, .mode-button, .theme-button { width: 100%; max-width: 220px; }
-            .key-hints { grid-template-columns: repeat(3, 1fr); } .status-bar { flex-direction: column; align-items: center; gap: 10px; }
+            .title {
+                font-size: 3rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-top: -15px;
+                margin-bottom: 25px;
+            }
+
+            .drum-kit {
+                gap: 15px;
+            }
+
+            .drum-button {
+                height: 100px;
+            }
+
+            .icon {
+                font-size: 32px;
+            }
+
+            .control-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .stop-button,
+            .mode-button,
+            .theme-button {
+                width: 100%;
+                max-width: 220px;
+            }
+
+            .key-hints {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .status-bar {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
         }
+
         @media (max-width: 480px) {
-            .container { padding: 20px 15px; } .title { font-size: 2.5rem; margin-bottom: 30px; }
-            .subtitle { font-size: 0.9rem; margin-top: -15px; } .drum-kit { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .drum-button { height: 90px; } .icon { font-size: 28px; margin-bottom: 5px; } .label { font-size: 12px; }
-            .key-hints { grid-template-columns: repeat(2, 1fr); font-size: 12px; } .visualizer { height: 50px; }
+            .container {
+                padding: 20px 15px;
+            }
+
+            .title {
+                font-size: 2.5rem;
+                margin-bottom: 30px;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+                margin-top: -15px;
+            }
+
+            .drum-kit {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .drum-button {
+                height: 90px;
+            }
+
+            .icon {
+                font-size: 28px;
+                margin-bottom: 5px;
+            }
+
+            .label {
+                font-size: 12px;
+            }
+
+            .key-hints {
+                grid-template-columns: repeat(2, 1fr);
+                font-size: 12px;
+            }
+
+            .visualizer {
+                height: 50px;
+            }
         }
     </style>
 </head>
+
 <body class="neon-galaxy">
     <div id="stars" class="stars"></div>
     <div class="glow"></div>
@@ -181,18 +842,65 @@
             <div class="mode-indicator">Standard Mode</div>
         </div>
         <div class="drum-kit">
-            <button class="drum-button" id="clap-btn" data-sound="clap"><div class="icon-container"><div class="icon">👏</div><div class="label">Clap</div></div></button>
-            <button class="drum-button" id="hihat-btn" data-sound="hihat"><div class="icon-container"><div class="icon">🎶</div><div class="label">Hi-Hat</div></div></button>
-            <button class="drum-button" id="kick-btn" data-sound="kick"><div class="icon-container"><div class="icon">👊</div><div class="label">Kick</div></div></button>
-            <button class="drum-button" id="openhat-btn" data-sound="openhat"><div class="icon-container"><div class="icon">🎤</div><div class="label">Open Hat</div></div></button>
-            <button class="drum-button" id="boom-btn" data-sound="boom"><div class="icon-container"><div class="icon">💥</div><div class="label">Boom</div></div></button>
-            <button class="drum-button" id="ride-btn" data-sound="ride"><div class="icon-container"><div class="icon">🧹</div><div class="label">Ride</div></div></button>
-            <button class="drum-button" id="snare-btn" data-sound="snare"><div class="icon-container"><div class="icon">💨</div><div class="label">Snare</div></div></button>
-            <button class="drum-button" id="hiphop-btn" data-sound="hiphop"><div class="icon-container"><div class="icon">🔥</div><div class="label">Hip Hop</div></div></button>
-            <button class="drum-button" id="piano-btn" data-sound="piano"><div class="icon-container"><div class="icon">🎹</div><div class="label">Piano</div></div></button>
+            <button class="drum-button" id="clap-btn" data-sound="clap">
+                <div class="icon-container">
+                    <div class="icon">👏</div>
+                    <div class="label">Clap</div>
+                </div>
+            </button>
+            <button class="drum-button" id="hihat-btn" data-sound="hihat">
+                <div class="icon-container">
+                    <div class="icon">🎶</div>
+                    <div class="label">Hi-Hat</div>
+                </div>
+            </button>
+            <button class="drum-button" id="kick-btn" data-sound="kick">
+                <div class="icon-container">
+                    <div class="icon">👊</div>
+                    <div class="label">Kick</div>
+                </div>
+            </button>
+            <button class="drum-button" id="openhat-btn" data-sound="openhat">
+                <div class="icon-container">
+                    <div class="icon">🎤</div>
+                    <div class="label">Open Hat</div>
+                </div>
+            </button>
+            <button class="drum-button" id="boom-btn" data-sound="boom">
+                <div class="icon-container">
+                    <div class="icon">💥</div>
+                    <div class="label">Boom</div>
+                </div>
+            </button>
+            <button class="drum-button" id="ride-btn" data-sound="ride">
+                <div class="icon-container">
+                    <div class="icon">🧹</div>
+                    <div class="label">Ride</div>
+                </div>
+            </button>
+            <button class="drum-button" id="snare-btn" data-sound="snare">
+                <div class="icon-container">
+                    <div class="icon">💨</div>
+                    <div class="label">Snare</div>
+                </div>
+            </button>
+            <button class="drum-button" id="hiphop-btn" data-sound="hiphop">
+                <div class="icon-container">
+                    <div class="icon">🔥</div>
+                    <div class="label">Hip Hop</div>
+                </div>
+            </button>
+            <button class="drum-button" id="piano-btn" data-sound="piano">
+                <div class="icon-container">
+                    <div class="icon">🎹</div>
+                    <div class="label">Piano</div>
+                </div>
+            </button>
         </div>
         <div class="controls">
-            <div class="visualizer"><div class="wave" id="wave"></div></div>
+            <div class="visualizer">
+                <div class="wave" id="wave"></div>
+            </div>
             <div class="control-buttons">
                 <button class="stop-button" onclick="stopAll()">Stop All</button>
                 <button class="mode-button" onclick="toggleMode()">Change Mode</button>
@@ -200,16 +908,36 @@
             </div>
         </div>
         <div class="key-hints">
-            <div class="key-hint"><div class="key">A</div>Clap</div>
-            <div class="key-hint"><div class="key">S</div>Hi-Hat</div>
-            <div class="key-hint"><div class="key">D</div>Kick</div>
-            <div class="key-hint"><div class="key">F</div>Open Hat</div>
-            <div class="key-hint"><div class="key">G</div>Boom</div>
-            <div class="key-hint"><div class="key">H</div>Ride</div>
-            <div class="key-hint"><div class="key">J</div>Snare</div>
-            <div class="key-hint"><div class="key">K</div>Hip Hop</div>
-            <div class="key-hint"><div class="key">L</div>Piano</div>
-            <div class="key-hint"><div class="key">␣</div>Stop</div>
+            <div class="key-hint">
+                <div class="key">A</div>Clap
+            </div>
+            <div class="key-hint">
+                <div class="key">S</div>Hi-Hat
+            </div>
+            <div class="key-hint">
+                <div class="key">D</div>Kick
+            </div>
+            <div class="key-hint">
+                <div class="key">F</div>Open Hat
+            </div>
+            <div class="key-hint">
+                <div class="key">G</div>Boom
+            </div>
+            <div class="key-hint">
+                <div class="key">H</div>Ride
+            </div>
+            <div class="key-hint">
+                <div class="key">J</div>Snare
+            </div>
+            <div class="key-hint">
+                <div class="key">K</div>Hip Hop
+            </div>
+            <div class="key-hint">
+                <div class="key">L</div>Piano
+            </div>
+            <div class="key-hint">
+                <div class="key">␣</div>Stop
+            </div>
         </div>
     </div>
     <audio id="clap-sound" src="cs-kick-04-d-128bpm-258878.mp3"></audio>
@@ -394,4 +1122,5 @@
         setupWave();
     </script>
 </body>
+
 </html>
